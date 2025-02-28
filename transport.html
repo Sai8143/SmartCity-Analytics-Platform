@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Transport Tracking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_VALID_GOOGLE_MAPS_API_KEY&callback=initMap" async defer></script>
+    <script>
+        function initMap() {
+            const map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 37.7749, lng: -122.4194 },
+                zoom: 13,
+            });
+
+            const transportMarkers = [
+                { position: { lat: 37.775, lng: -122.418 }, type: 'Bus' },
+                { position: { lat: 37.774, lng: -122.419 }, type: 'Train' },
+                { position: { lat: 37.773, lng: -122.420 }, type: 'Metro' }
+            ];
+
+            transportMarkers.forEach(markerData => {
+                new google.maps.Marker({
+                    position: markerData.position,
+                    map: map,
+                    title: markerData.type
+                });
+            });
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-gray-100">
+    <header class="bg-white border-b shadow p-4 text-center">
+        <h1 class="text-2xl font-bold text-blue-600">Public Transport Tracking</h1>
+    </header>
+    
+    <main class="container mx-auto px-4 py-8">
+        <div class="bg-white p-6 shadow rounded mb-8">
+            <h2 class="text-lg font-bold mb-2">Live Transport Tracking</h2>
+            <div id="map" class="w-full h-96 rounded shadow"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-white p-6 shadow rounded">
+                <h2 class="text-lg font-bold">Estimated Arrival Times & Occupancy</h2>
+                <table class="w-full border-collapse border border-gray-300 mt-2">
+                    <tr class="bg-gray-200">
+                        <th class="border p-2">Transport</th>
+                        <th class="border p-2">Arrival Time</th>
+                        <th class="border p-2">Occupancy</th>
+                    </tr>
+                    <tr>
+                        <td class="border p-2">Bus #21</td>
+                        <td class="border p-2">5 mins</td>
+                        <td class="border p-2">70%</td>
+                    </tr>
+                    <tr>
+                        <td class="border p-2">Train A</td>
+                        <td class="border p-2">12 mins</td>
+                        <td class="border p-2">50%</td>
+                    </tr>
+                    <tr>
+                        <td class="border p-2">Metro Green</td>
+                        <td class="border p-2">8 mins</td>
+                        <td class="border p-2">85%</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="bg-white p-6 shadow rounded">
+                <h2 class="text-lg font-bold">Suggested Alternate Routes</h2>
+                <ul class="list-disc pl-5 text-blue-600">
+                    <li>Bus #21 is congested → Take Bus #34</li>
+                    <li>Train A delay → Use Metro Green Line</li>
+                    <li>Metro Green crowded → Wait for next arrival in 5 mins</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

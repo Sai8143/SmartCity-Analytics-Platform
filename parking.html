@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Parking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=REPLACE_WITH_YOUR_GOOGLE_MAPS_API_KEY&callback=initMap" async defer></script>
+    <script>
+        function initMap() {
+            const map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 37.7749, lng: -122.4194 },
+                zoom: 12,
+            });
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-gray-100">
+    <header class="bg-white border-b shadow">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-blue-600">Smart Parking</h1>
+            <button id="refreshParking" class="bg-blue-500 text-white px-4 py-2 rounded">Refresh Parking Data</button>
+        </div>
+    </header>
+    
+    <main class="container mx-auto px-4 py-8">
+        <div class="bg-white p-6 shadow rounded mb-8">
+            <h2 class="text-lg font-bold mb-4">Parking Availability</h2>
+            <canvas id="parkingChart"></canvas>
+        </div>
+        <div class="bg-white p-6 shadow rounded">
+            <h2 class="text-lg font-bold mb-4">Parking Locations</h2>
+            <div id="map" class="w-full h-96 mt-4 rounded shadow"></div>
+        </div>
+    </main>
+    
+    <script>
+        document.getElementById('refreshParking').addEventListener('click', function() {
+            alert("Fetching latest parking data...");
+        });
+
+        const ctx = document.getElementById('parkingChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Zone A', 'Zone B', 'Zone C', 'Zone D'],
+                datasets: [{
+                    label: 'Available Spots',
+                    data: [20, 15, 10, 5],
+                    backgroundColor: ['#4CAF50', '#FFC107', '#2196F3', '#E91E63']
+                }]
+            }
+        });
+    </script>
+</body>
+</html>

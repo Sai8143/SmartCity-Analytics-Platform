@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_VALID_GOOGLE_MAPS_API_KEY&libraries=visualization&callback=initMap" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function initMap() {
+            const map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 37.7749, lng: -122.4194 },
+                zoom: 12,
+            });
+            
+            const heatmapData = [
+                new google.maps.LatLng(37.775, -122.418),
+                new google.maps.LatLng(37.774, -122.419),
+                new google.maps.LatLng(37.773, -122.420),
+            ];
+            
+            new google.maps.visualization.HeatmapLayer({
+                data: heatmapData,
+                map: map,
+            });
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-gray-100">
+    <header class="bg-white border-b shadow p-4 text-center">
+        <h1 class="text-2xl font-bold text-blue-600">Traffic Management</h1>
+    </header>
+    
+    <main class="container mx-auto px-4 py-8">
+        <div class="bg-white p-6 shadow rounded mb-8">
+            <h2 class="text-lg font-bold mb-2">Real-Time Traffic Congestion</h2>
+            <div id="map" class="w-full h-96 rounded shadow"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-white p-6 shadow rounded">
+                <h2 class="text-lg font-bold">Predictive Traffic Analysis</h2>
+                <canvas id="trafficPredictionChart"></canvas>
+            </div>
+            <div class="bg-white p-6 shadow rounded">
+                <h2 class="text-lg font-bold">Accident & Roadblock Alerts</h2>
+                <ul id="alerts" class="list-disc pl-5 text-red-600">
+                    <li>Accident at Main Street & 5th Avenue</li>
+                    <li>Roadblock on Highway 101 - Use alternate route</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        const ctx = document.getElementById('trafficPredictionChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['08:00', '10:00', '12:00', '14:00', '16:00', '18:00'],
+                datasets: [{
+                    label: 'Predicted Congestion (%)',
+                    data: [30, 40, 60, 70, 85, 95],
+                    borderColor: 'orange',
+                    fill: false
+                }]
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCity Analytics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="min-h-screen bg-gray-100">
+    <header class="bg-white border-b shadow">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-blue-600">SmartCity Analytics</h1>
+            <button id="toggleLive" class="bg-blue-500 text-white px-4 py-2 rounded">Live Updates</button>
+        </div>
+    </header>
+    
+    <main class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white p-6 shadow rounded">
+                <p class="text-gray-500">Active Vehicles</p>
+                <h3 class="text-2xl font-bold">1,247</h3>
+            </div>
+            <div class="bg-white p-6 shadow rounded">
+                <p class="text-gray-500">Energy Efficiency</p>
+                <h3 class="text-2xl font-bold">92%</h3>
+            </div>
+            <div class="bg-white p-6 shadow rounded">
+                <p class="text-gray-500">Active Incidents</p>
+                <h3 class="text-2xl font-bold">3</h3>
+            </div>
+            <div class="bg-white p-6 shadow rounded">
+                <p class="text-gray-500">Traffic Flow</p>
+                <h3 class="text-2xl font-bold">85%</h3>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-white p-6 shadow rounded">
+                <h2 class="text-lg font-bold">Traffic Trends</h2>
+                <canvas id="trafficChart"></canvas>
+            </div>
+            <div class="bg-white p-6 shadow rounded">
+                <h2 class="text-lg font-bold">Energy Distribution</h2>
+                <canvas id="energyChart"></canvas>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.getElementById("toggleLive").addEventListener("click", function() {
+            this.classList.toggle("bg-gray-500");
+            this.innerText = this.innerText === "Live Updates" ? "Paused" : "Live Updates";
+        });
+
+        const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+        new Chart(trafficCtx, {
+            type: 'line',
+            data: {
+                labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'],
+                datasets: [{
+                    label: 'Vehicles',
+                    data: [120, 80, 300, 250, 400, 200],
+                    borderColor: 'blue',
+                    fill: false
+                }, {
+                    label: 'Congestion',
+                    data: [20, 10, 75, 60, 90, 45],
+                    borderColor: 'red',
+                    fill: false
+                }]
+            }
+        });
+
+        const energyCtx = document.getElementById('energyChart').getContext('2d');
+        new Chart(energyCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Electric', 'Hybrid', 'Other'],
+                datasets: [{
+                    data: [65, 25, 10],
+                    backgroundColor: ['#4CAF50', '#FFC107', '#9E9E9E']
+                }]
+            }
+        });
+    </script>
+</body>
+</html>
